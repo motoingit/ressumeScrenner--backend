@@ -1,5 +1,7 @@
 package com.example.ResumeScrenner.payload;
 
+import com.example.ResumeScrenner.dao.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -17,4 +19,5 @@ public class UserprofileResponseDto {
     private String email;
     private String name;
     private String image;
+      private Role role;
 }

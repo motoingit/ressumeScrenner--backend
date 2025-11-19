@@ -5,68 +5,102 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ResumeScrenner.Repositories.UserRepository;
-import com.example.ResumeScrenner.dao.Userprofile;
-import com.example.ResumeScrenner.payload.UserprofileDto;
+import com.example.ResumeScrenner.dao.CandidateDao;
+import com.example.ResumeScrenner.dao.ManagerDao;
+import com.example.ResumeScrenner.dao.Role;
+import com.example.ResumeScrenner.dao.UserProfile;
+import com.example.ResumeScrenner.payload.UserProfileDto;
 import com.example.ResumeScrenner.payload.UserprofileResponseDto;
 
 @Service
-public class UserprofileServiceImp implements UserprofileService{
+public class UserprofileServiceImp implements UserprofileService {
 
-   @Autowired
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
-    ModelMapper modelmapper;
+    ModelMapper modelMapper;
 
+    
     @Override
     public List<UserprofileResponseDto> getallUsers() {
-      List<Userprofile> userprofiles=userRepository.findAll();
-    List<UserprofileResponseDto> userprofileResponsedto= userprofiles.stream().map(userobj -> modelmapper.map(userobj,UserprofileResponseDto.class)).collect(Collectors.toList());
-        return userprofileResponsedto;
+        return userRepository.findAll()
+                .stream()
+                .map(user -> modelMapper.map(user, UserprofileResponseDto.class))
+                .collect(Collectors.toList());
     }
 
+   
     @Override
-    public UserprofileResponseDto postUser(UserprofileDto userprofileDto) {
-          Userprofile userprofile=modelmapper.map( userprofileDto,Userprofile.class);
-             userprofile=userRepository.save(userprofile);
-             UserprofileResponseDto userprofileResponseDto=modelmapper.map(userprofile,UserprofileResponseDto.class);
-             return userprofileResponseDto;
-    }
+    public UserprofileResponseDto postUser(UserProfileDto dto) {
 
+      
+        UserProfile user = modelMapper.map(dto, UserProfile.class);
+
+        
+        user = userRepository.save(user);
+
+     
+        if (user.getRole() == Role.MANAGER) {
+            ManagerDao manager = new ManagerDao();
+            manager.setUser(user);
+            user.setManager(manager);
+
+        } else if (user.getRole() == Role.CANDIDATE) {
+            CandidateDao candidate = new CandidateDao();
+            candidate.setUser(user);
+            user.setCandidate(candidate);
+        }
+
+       
+        user = userRepository.save(user);
+
+        return modelMapper.map(user, UserprofileResponseDto.class);
+    }
 
     @Override
     public UserprofileResponseDto deleteUser(Long id) {
-       Optional<Userprofile> userprofile= userRepository.findById(id);
-       userRepository.deleteById(id);
-       UserprofileResponseDto responseDto=modelmapper.map(userprofile,UserprofileResponseDto.class);
-       return responseDto;
+        Optional<UserProfile> userOpt = userRepository.findById(id);
+
+        if (userOpt.isEmpty()) return null;
+
+        UserProfile user = userOpt.get();
+
+        UserprofileResponseDto dto = modelMapper.map(user, UserprofileResponseDto.class);
+
+        userRepository.deleteById(id);
+
+        return dto;
     }
 
     @Override
     public UserprofileResponseDto getUser(Long id) {
-       Optional<Userprofile> userprofile=userRepository.findById(id);
-       UserprofileResponseDto userprofileResponseDto=modelmapper.map(userprofile,UserprofileResponseDto.class);
-       return userprofileResponseDto;
+        Optional<UserProfile> userOpt = userRepository.findById(id);
+
+        if (userOpt.isEmpty()) return null;
+
+        return modelMapper.map(userOpt.get(), UserprofileResponseDto.class);
     }
 
+   
     @Override
-    public UserprofileResponseDto updateUser(UserprofileDto  userprofileDto,Long id) {
-          Optional< Userprofile> userprofile=userRepository.findById(id);
-                 Userprofile userprofile2=modelmapper.map(userprofile,Userprofile.class);
-          userprofile2.setName(userprofileDto.getName());
-          userprofile2.setImage(userprofileDto.getImage());
-          userprofile2.setEmail(userprofileDto.getEmail());
-          userprofile2=userRepository.save(userprofile2);
-         UserprofileResponseDto userprofileResponseDto= modelmapper.map(userprofile2,UserprofileResponseDto.class);
+    public UserprofileResponseDto updateUser(UserProfileDto dto, Long id) {
 
-         return userprofileResponseDto;
+        Optional<UserProfile> userOpt = userRepository.findById(id);
+        if (userOpt.isEmpty()) return null;
+
+        UserProfile user = userOpt.get();
+
       
-    }
-    
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
 
+        user = userRepository.save(user);
+
+        return modelMapper.map(user, UserprofileResponseDto.class);
+    }
 }

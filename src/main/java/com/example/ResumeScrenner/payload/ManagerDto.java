@@ -1,6 +1,4 @@
-package  com.example.ResumeScrenner.payload;
-
-import com.example.ResumeScrenner.dao.Role;
+package com.example.ResumeScrenner.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class UserProfileDto {
-    private String email;
+public class ManagerDto {
+  
     private String name;
+    private String email;
     private String password;
-    private String image;
-    private Role role;
 }
