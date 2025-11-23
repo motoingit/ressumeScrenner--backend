@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.ResumeScrenner.Repositories.ManagerRepository;
 import com.example.ResumeScrenner.Repositories.UserRepository;
 import com.example.ResumeScrenner.dao.ManagerDao;
-import com.example.ResumeScrenner.dao.UserProfile;
+import com.example.ResumeScrenner.dao.Userprofile;
 import com.example.ResumeScrenner.payload.ManagerResponse;
 import com.example.ResumeScrenner.payload.ManagerDto;
 import com.example.ResumeScrenner.payload.UserprofileResponseDto;

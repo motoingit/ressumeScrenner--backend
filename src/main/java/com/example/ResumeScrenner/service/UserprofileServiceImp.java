@@ -12,8 +12,8 @@ import com.example.ResumeScrenner.Repositories.UserRepository;
 import com.example.ResumeScrenner.dao.CandidateDao;
 import com.example.ResumeScrenner.dao.ManagerDao;
 import com.example.ResumeScrenner.dao.Role;
-import com.example.ResumeScrenner.dao.UserProfile;
-import com.example.ResumeScrenner.payload.UserProfileDto;
+import com.example.ResumeScrenner.dao.Userprofile;
+import com.example.ResumeScrenner.payload.UserprofileDto;
 import com.example.ResumeScrenner.payload.UserprofileResponseDto;
 
 @Service
@@ -36,12 +36,12 @@ public class UserprofileServiceImp implements UserprofileService {
 
    
     @Override
-    public UserprofileResponseDto postUser(UserProfileDto dto) {
+    public UserprofileResponseDto postUser(UserprofileDto dto) {
 
       
-        UserProfile user = modelMapper.map(dto, UserProfile.class);
+        Userprofile user = modelMapper.map(dto, Userprofile.class);
 
-        
+    
         user = userRepository.save(user);
 
      
@@ -64,11 +64,11 @@ public class UserprofileServiceImp implements UserprofileService {
 
     @Override
     public UserprofileResponseDto deleteUser(Long id) {
-        Optional<UserProfile> userOpt = userRepository.findById(id);
+        Optional<Userprofile> userOpt = userRepository.findById(id);
 
         if (userOpt.isEmpty()) return null;
 
-        UserProfile user = userOpt.get();
+        Userprofile user = userOpt.get();
 
         UserprofileResponseDto dto = modelMapper.map(user, UserprofileResponseDto.class);
 
@@ -79,7 +79,7 @@ public class UserprofileServiceImp implements UserprofileService {
 
     @Override
     public UserprofileResponseDto getUser(Long id) {
-        Optional<UserProfile> userOpt = userRepository.findById(id);
+        Optional<Userprofile> userOpt = userRepository.findById(id);
 
         if (userOpt.isEmpty()) return null;
 
@@ -88,12 +88,12 @@ public class UserprofileServiceImp implements UserprofileService {
 
    
     @Override
-    public UserprofileResponseDto updateUser(UserProfileDto dto, Long id) {
+    public UserprofileResponseDto updateUser(UserprofileDto dto, Long id) {
 
-        Optional<UserProfile> userOpt = userRepository.findById(id);
+        Optional<Userprofile> userOpt = userRepository.findById(id);
         if (userOpt.isEmpty()) return null;
 
-        UserProfile user = userOpt.get();
+        Userprofile user = userOpt.get();
 
       
         user.setName(dto.getName());

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.example.ResumeScrenner.Repositories.UserRepository;
-import com.example.ResumeScrenner.dao.UserProfile;
+import com.example.ResumeScrenner.dao.Userprofile;
 
 @Component
 public class CustomUserDetailService implements UserDetailsService{
@@ -17,7 +17,7 @@ public class CustomUserDetailService implements UserDetailsService{
       UserRepository userrepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Optional<UserProfile> info=userrepository.findByName(username);
+       Optional<Userprofile> info=userrepository.findByName(username);
        return info.map(UserInfoUserDetails :: new)
                  .orElseThrow(()-> new UsernameNotFoundException("user not foound"));
      //  if(username==null) throw new UnsupportedOperationException("Unimplemented method 'loadUserByUsername'");

@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.ResumeScrenner.dao.CandidateDao;
 import com.example.ResumeScrenner.dao.ManagerDao;
 import com.example.ResumeScrenner.dao.Role;
-import com.example.ResumeScrenner.dao.UserProfile;
+import com.example.ResumeScrenner.dao.Userprofile;
 
 public class UserInfoUserDetails implements UserDetails {
 
@@ -22,7 +22,7 @@ public class UserInfoUserDetails implements UserDetails {
     private ManagerDao manager;
     private CandidateDao candidate;
 
-    public UserInfoUserDetails(UserProfile user) {
+    public UserInfoUserDetails(Userprofile user) {
         this.id = user.getUserId();
         this.username = user.getName();
         this.password = user.getPassword();

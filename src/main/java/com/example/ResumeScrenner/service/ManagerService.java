@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.ResumeScrenner.payload.ManagerDto;
 import com.example.ResumeScrenner.payload.ManagerResponse;
-import com.example.ResumeScrenner.payload.UserProfileDto;
+import com.example.ResumeScrenner.payload.UserprofileDto;
 
 
 public interface  ManagerService {

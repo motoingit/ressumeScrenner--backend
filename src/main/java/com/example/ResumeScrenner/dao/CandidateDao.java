@@ -34,7 +34,7 @@ public class CandidateDao {
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id")
-    private UserProfile user;
+    private Userprofile user;
 
     private String githubLink;
     private String linkedinLink;

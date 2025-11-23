@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ResumeScrenner.payload.ManagerDto;
 import com.example.ResumeScrenner.payload.ManagerResponse;
-import com.example.ResumeScrenner.payload.UserProfileDto;
+import com.example.ResumeScrenner.payload.UserprofileDto;
 import com.example.ResumeScrenner.payload.UserprofileResponseDto;
 import com.example.ResumeScrenner.service.ManagerService;
 import com.example.ResumeScrenner.service.UserprofileService;

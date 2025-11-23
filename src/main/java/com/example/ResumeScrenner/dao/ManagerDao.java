@@ -30,7 +30,7 @@ public class ManagerDao {
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id")
-    private UserProfile user;
+    private Userprofile user;
   
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)

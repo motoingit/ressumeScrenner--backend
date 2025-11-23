@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ResumeScrenner.Repositories.UserRepository;
 import com.example.ResumeScrenner.configs.securityconfig.UserInfoUserDetails;
-import com.example.ResumeScrenner.dao.UserProfile;
+import com.example.ResumeScrenner.dao.Userprofile;
 import com.example.ResumeScrenner.jwt.Jwtutils;
-import com.example.ResumeScrenner.payload.UserProfileDto;
+import com.example.ResumeScrenner.payload.UserprofileDto;
 import com.example.ResumeScrenner.payload.UserprofileResponseDto;
 import com.example.ResumeScrenner.service.UserprofileService;
 
@@ -65,7 +65,7 @@ public class UserController {
       return new ResponseEntity<List<UserprofileResponseDto>>(userprofileService.getallUsers(),HttpStatus.OK);
   }
   @PostMapping("/public/user")
-  public ResponseEntity<UserprofileResponseDto> postUsers(@RequestBody UserProfileDto userprofileDto) {
+  public ResponseEntity<UserprofileResponseDto> postUsers(@RequestBody UserprofileDto userprofileDto) {
      return new ResponseEntity<UserprofileResponseDto>(userprofileService.postUser(userprofileDto),HttpStatus.OK);
       
       
@@ -80,15 +80,15 @@ public class UserController {
      return new ResponseEntity<UserprofileResponseDto>(userprofileService.deleteUser(id),HttpStatus.OK);
   }
   @PutMapping("path/{id}")
-  public ResponseEntity<UserprofileResponseDto> updateUser(@PathVariable Long id, @RequestBody UserProfileDto userprofileDto) {
+  public ResponseEntity<UserprofileResponseDto> updateUser(@PathVariable Long id, @RequestBody UserprofileDto userprofileDto) {
       return  new ResponseEntity<UserprofileResponseDto>(userprofileService.updateUser(userprofileDto,id),HttpStatus.OK);
   }
     @PostMapping("/public/user/login")
-    public ResponseEntity<?> loginAuth(@RequestBody UserProfileDto userprofileDto,
+    public ResponseEntity<?> loginAuth(@RequestBody UserprofileDto userprofileDto,
                                        HttpServletResponse response) {
                                         System.out.println("RAW: " + userprofileDto.getPassword());
 
-UserProfile user = userRepository.findByName(userprofileDto.getName()).get();
+Userprofile user = userRepository.findByName(userprofileDto.getName()).get();
 System.out.println("DB HASH: " + user.getPassword());
 
 System.out.println("MATCHES? => " +
@@ -134,7 +134,7 @@ System.out.println("MATCHES? => " +
         }
     }
 @PostMapping("/public/user/register")
-public ResponseEntity<?> registerUser(@RequestBody UserProfileDto userprofileDto) {
+public ResponseEntity<?> registerUser(@RequestBody UserprofileDto userprofileDto) {
 
     
     String encodedPass = passwordEncoder.encode(userprofileDto.getPassword());
@@ -182,7 +182,7 @@ public ResponseEntity<?> checkAuth(
             return ResponseEntity.status(401).body("Invalid token");
         }
 
-        UserProfile user = userRepository.findByName(username)
+        Userprofile user = userRepository.findByName(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Map<String, Object> body = new HashMap<>();

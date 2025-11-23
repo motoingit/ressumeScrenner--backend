@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Getter
 @Entity
 @Setter
-public class UserProfile {
+public class Userprofile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
